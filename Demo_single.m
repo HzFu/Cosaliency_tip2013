@@ -1,47 +1,27 @@
 % The demo for Cluster-based Saliency Detection in single image
 
-img_path='./img_data/single_data/';
-result_path = './img_output/';
-name = '1_45_45397.jpg';
+para.img_path='./img_data/single_data/';
+para.result_path = './img_output/';
+para.img_name = '1_45_45397.jpg';
 
 %--- cluster number -------
-Bin_num_single=6;
-
+para.Bin_num_single=6;
 %---- scaling the image ---
-ScaleH=300;
-ScaleW=300;
+para.Scale=300;
+para.img_num = 1;
+data.image = cell(para.img_num,1);
 
-im=imread([img_path name]);
-[orgH orgW channel]=size(im);
+data.image{1}=imread([para.img_path para.img_name]);
+[orgH, orgW, channel]=size(data.image{1});
 
-%----- obtaining the features -----
-[All_vector All_img All_DisVector]=GetImVector(im, ScaleH, ScaleW,0);
+% single sliency detection
+single_map = Single_saliency_main( data,para);
+Saliency_Map_single=imresize(Gauss_normal(single_map), [orgH, orgW]);
 
-%----- image clustering (using Kmean++) ---
-[idx,ctrs] = kmeansPP(All_vector',Bin_num_single);
-idx=idx'; ctrs=ctrs';
+imwrite(data.image{1},[para.result_path  para.img_name(1:end-4) '_org.png'],'png');
+imwrite(Saliency_Map_single, [para.result_path  para.img_name(1:end-4) '_single.png'],'png');
 
-%----- clustering idx map ---------
-Cluster_Map = reshape(idx, ScaleH, ScaleW);
-
-%----- computing the Contrast cue -------
-Sal_weight_single= Gauss_normal(GetSalWeight( ctrs,idx));
-
-%----- computing the Spatial cue -------
-Dis_weight_single= Gauss_normal(GetPositionW( idx, All_DisVector, ScaleW, Bin_num_single ));
-
-%----- combining the cues -------
-SaliencyWeight_all=(Sal_weight_single.*Dis_weight_single);
-
-%----- generating the saliency map -----
-Saliency_Map_single = Cluster2img( Cluster_Map, SaliencyWeight_all, Bin_num_single);
-
-Saliency_Map_single=imresize(Gauss_normal(Saliency_Map_single),[orgH orgW]);
-
-imwrite(im,[result_path  name(1:end-4) '_org.png'],'png');
-imwrite(imresize(Saliency_Map_single, [orgH orgW]), [result_path  name(1:end-4) '_single.png'],'png');
-
-figure,subplot(1,2,1), imshow(im),title('Input images');
+figure,subplot(1,2,1), imshow(data.image{1}),title('Input images');
 subplot(1,2,2),imshow(Saliency_Map_single),title('Single Saliency');
 
 

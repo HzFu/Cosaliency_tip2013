@@ -19,4 +19,5 @@ DEMOS:
 --------------------------------------------------------------------------------
 Update:
 
+2014.10.1: We re-organized the single/co-saliency function structure.
 2014.08.19: We extracted the 'imread()' from the 'GetImVector' function.
