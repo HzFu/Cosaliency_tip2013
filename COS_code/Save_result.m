@@ -8,10 +8,10 @@ for i=1:para.img_num
    imwrite(im, [para.result_path para.files_list(i,1).name '_org.png'],'png');
    
    cosal = result.final_map(:, (1 + (i-1)*para.Scale):(i*para.Scale));
-   imwrite(imresize(cosal, [imH imW]), [para.result_path para.files_list(i,1).name '_cosaliency.png'],'png');
+   imwrite(imresize(cosal, [imH imW]), [para.result_path para.files_list(i,1).name(1:end-4) '_cosaliency.png'],'png');
    
    sigsal = result.single_map(:, (1 + (i-1)*para.Scale):(i*para.Scale));
-   imwrite(imresize(sigsal, [imH imW]), [para.result_path para.files_list(i,1).name '_single.png'],'png');
+   imwrite(imresize(sigsal, [imH imW]), [para.result_path para.files_list(i,1).name(1:end-4) '_single.png'],'png');
 end
 
 h=1;
