@@ -1,5 +1,9 @@
 % The demo for Cluster-based Saliency Detection in single image
 
+clc;close all;clear;
+
+addpath('./COS_code');
+
 para.img_path='./img_data/single_data/';
 para.result_path = './img_output/';
 para.img_name = '1_45_45397.jpg';
