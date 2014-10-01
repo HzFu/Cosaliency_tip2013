@@ -1,10 +1,6 @@
-function [ Saliency_Map_co, All_img] = Cosaliency_main( data, para)
+function [ Saliency_Map_co, All_img] = Cosaliency_main( data, img_num, Scale, Bin_num)
 %% COSALIENCY_DCS Summary of this function goes here
 %   Detailed explanation goes here
-    
-img_num=para.img_num;
-Scale=para.Scale; 
-Bin_num = para.Bin_num;
 
 %% ------ Obtain the co-saliency for multiple images-------------
 %----- obtaining the features -----

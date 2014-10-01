@@ -31,10 +31,10 @@ for img_idx = 1:para.img_num
 end
 
 %% cosaliency detection
-[ result.cos_map, result.All_img] = Cosaliency_main( data, para);
+[ result.cos_map, result.All_img] = Cosaliency_main( data, para.img_num, para.Scale, para.Bin_num);
 
 %% single sliency detection
-result.single_map = Single_saliency_main( data,para);
+result.single_map = Single_saliency_main( data, para.img_num, para.Scale, para.Bin_num_single);
 
 %% combine saliency map
 result.final_map = result.single_map .* result.cos_map;

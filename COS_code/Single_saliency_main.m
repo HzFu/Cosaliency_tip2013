@@ -1,12 +1,9 @@
-function [ Saliency_Map_single ] = Single_saliency_main( data,para)
+function [ Saliency_Map_single ] = Single_saliency_main( data, img_num, Scale, Bin_num_single)
 %SINGLE_SALIENCY_MAIN Summary of this function goes here
 %   Detailed explanation goes here
 
-img_num=para.img_num;
-Scale=para.Scale; 
-Bin_num_single = para.Bin_num_single;
-
 Saliency_Map_single = zeros([Scale,Scale*img_num]);
+
 for i=1:img_num
     img = data.image{i};
     [imvector, ~, DisVector]=GetImVector(img, Scale, Scale,0);
